@@ -52,7 +52,10 @@ Controller.prototype = {
   },
 
   runEditorContent: function() {
-    this._runner.send(this._editor.getContent());
+    this._runner.send({
+      source: this._editor.getContent(),
+      language: 'ES6'
+    });
   },
 
   _registerShortcuts: function(shortcuts) {

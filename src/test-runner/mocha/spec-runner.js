@@ -1,16 +1,20 @@
 import expect from 'referee/lib/expect';
 import should from 'should';
 import assert from 'assert';
-import {transform} from 'babel-core'; // the es6 transpiler
-import RuntimeError from '../runtime-error'
 
-function es6ToEs5(sourceCode) {
-  return transform(sourceCode).code
+import RuntimeError from '../runtime-error'
+import {compile} from '../compiler'
+
+function setErrorMessage(errorMessage) {
+  document.getElementById('errorOutput').innerText = errorMessage;
 }
 
 function consumeMessage(messageData) {
   var sender = messageData.source;
-  var specCode = messageData.data;
+
+  var specCodeDefinition = messageData.data;
+  var specLanguage = specCodeDefinition.language;
+  var specSource = specCodeDefinition.source;
 
   // Reset mocha env
   document.getElementById('mocha').innerHTML = '';
@@ -19,18 +23,20 @@ function consumeMessage(messageData) {
 
   // Run the spec source code, this calls describe, it, etc. and "fills"
   // the test runner suites which are executed later in `mocha.run()`.
-  document.getElementById('errorOutput').innerText = '';
+  setErrorMessage('');
+
   var es5Code;
   try {
-    es5Code = es6ToEs5(specCode);
+    es5Code = compile(specLanguage, specSource);
   } catch(e) {
-    document.getElementById('errorOutput').innerText = 'Syntax or ES6 transpile error\n\n' + e;
+    setErrorMessage('Syntax or transpile error\n\n' + e);
     return;
   }
+
   try {
     eval(es5Code);
   } catch(e) {
-    document.getElementById('errorOutput').innerText = 'Runtime error\n\n' + e + '\n\n' + RuntimeError.prettyPrint(e.stack, es5Code);
+    setErrorMessage('Runtime error\n\n' + e + '\n\n' + RuntimeError.prettyPrint(e.stack, es5Code));
     return;
   }
 
