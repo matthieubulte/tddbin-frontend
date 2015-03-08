@@ -2,7 +2,8 @@ import React from 'react';
 import View from './main-view';
 import TestRunner from '../test-runner/runner';
 import ShortcutProcessor from '../keyboard-shortcut/shortcut-processor';
-var compiler = require('../test-runner/compiler');
+import compiler from '../test-runner/compiler'
+
 var editor = require('ace-with-plugins');
 
 export function Controller(domNode, config) {
