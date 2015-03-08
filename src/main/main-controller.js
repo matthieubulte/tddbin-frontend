@@ -13,7 +13,8 @@ export function Controller(domNode, config) {
   this.availableLanguages = [
     { language: compiler.ES5, aceMode: 'ace/mode/javascript' },
     { language: compiler.ES6, aceMode: 'ace/mode/javascript' },
-    { language: compiler.CoffeeScript, aceMode: 'ace/mode/coffee'}
+    { language: compiler.CoffeeScript, aceMode: 'ace/mode/coffee'},
+    { language: compiler.TypeScript, aceMode: 'ace/mode/typescript'}
   ];
 
   this.render();

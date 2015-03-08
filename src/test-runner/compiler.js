@@ -1,5 +1,8 @@
 var babel = require('babel');
 var coffee = require('coffee-script');
+var tsc = require('typescript-compiler');
+
+var typescriptDefinitions = require('./typescriptDefinitions.js').typescriptDefinitions;
 
 var compilers = {};
 
@@ -22,11 +25,37 @@ export const CoffeeScript = 'CoffeeScript';
 function compileCoffeeScript(sourceCode) {
 	// TERRIBLE HACK.
 	// pull request to fix this was sent, see https://github.com/jashkenas/coffeescript/pull/3892
-	process.stdout = {};
+	if (!process.stdout) process.stdout = {};
 
 	return coffee.compile(sourceCode, { bare: true});
 }
 compilers[CoffeeScript] = compileCoffeeScript;
+
+
+export const TypeScript = 'TypeScript';
+function compileTypeScript(sourceCode) {
+	var compilerOptions = ['--noLib'];
+	var compiledFiles = {
+		'lib.d.ts': typescriptDefinitions['lib.d.ts'],
+		'mocha.d.ts': typescriptDefinitions['mocha.d.ts'],
+		'assert.d.ts': typescriptDefinitions['assert.d.ts'],
+		'tdd-test.ts': sourceCode
+	};
+
+	var compileResult = tsc.compileStrings(compiledFiles, compilerOptions);
+
+	if(compileResult.errors.length !== 0) {
+
+		var errors = compileResult.errors.map(function(e) {
+			return e.replace(/:.*:/, ':');
+		});
+
+		throw new Error(errors.join('\n'));
+	}
+
+	return compileResult.sources['tdd-test.js'];
+}
+compilers[TypeScript] = compileTypeScript;
 
 export function compile(sourceLanguage, sourceCode) {
   var compile = compilers[sourceLanguage];
