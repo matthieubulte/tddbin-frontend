@@ -12,6 +12,8 @@ export default class View extends React.Component {
           metaKeySymbol={props.metaKeySymbol}
           onSave={props.onSave}
           onResetCode={props.onResetCode}
+          currentLanguage={props.currentLanguage}
+          toggleLanguage={props.toggleLanguage}
         />
 
         <div className="editor-and-runner">

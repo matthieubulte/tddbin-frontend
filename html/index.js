@@ -62,9 +62,6 @@ const getKataUrl = () => {
   }
 };
 
-
-
-
 const shortcuts = aceDefaultShortcuts.concat([
   getShortcutObject([metaKey, 'S'], onSave, 'Save+Run')
 ]);

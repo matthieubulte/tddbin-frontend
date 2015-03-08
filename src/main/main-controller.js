@@ -2,11 +2,23 @@ import React from 'react';
 import View from './main-view';
 import TestRunner from '../test-runner/runner';
 import ShortcutProcessor from '../keyboard-shortcut/shortcut-processor';
+<<<<<<< HEAD
 import Editor from '../editor/editor';
+=======
+var compiler = require('../test-runner/compiler');
+var editor = require('ace-with-plugins');
+>>>>>>> Added switching of syntax highlighting based on the current language
 
 export function Controller(domNode, config) {
   this._domNode = domNode;
   this._config = config;
+  this._currentLanguage = compiler.ES5;
+
+  this.availableLanguages = [
+    { language: compiler.ES5, aceMode: 'ace/mode/javascript' },
+    { language: compiler.ES6, aceMode: 'ace/mode/javascript' }
+  ];
+
   this.render();
 }
 
@@ -32,7 +44,9 @@ Controller.prototype = {
       runnerId: this._runnerDomNodeId,
       onSave: this.onSave.bind(this),
       onResetCode: this._onResetCode,
-      shortcuts: shortcuts
+      shortcuts: shortcuts,
+      currentLanguage: this._currentLanguage,
+      toggleLanguage: this._toggleLanguage.bind(this),
     };
     this._component = React.render(<View {...props}/>, this._domNode);
   },
@@ -47,6 +61,33 @@ Controller.prototype = {
     window.location.reload();
   },
 
+  _toggleLanguage: function() {
+    var currentLanguageIndex = this._findCurrentLanguageIndex();
+    var nextLanguageIndex = 1 + currentLanguageIndex;
+    if(nextLanguageIndex >= this.availableLanguages.length) {
+      nextLanguageIndex = 0;
+    }
+
+    var language = this.availableLanguages[nextLanguageIndex];
+
+    this._currentLanguage = language.language;
+    // TODO: that's quite uggly, we should talk about the ace-with-plugins project
+    this._editor._editor._editor.getSession().setMode(language.aceMode);
+
+    this._render();
+  },
+
+  _findCurrentLanguageIndex: function() {
+    var currentLanguage = this._currentLanguage;
+    return this.availableLanguages.reduce(function(foundIndex, language, index) {
+      if(foundIndex === -1 && language.language === currentLanguage) {
+        foundIndex = index;
+      }
+
+      return foundIndex;
+    }, -1);
+  },
+
   setEditorContent: function(sourceCode) {
     this._editor.setContent(sourceCode);
   },
@@ -54,7 +95,7 @@ Controller.prototype = {
   runEditorContent: function() {
     this._runner.send({
       source: this._editor.getContent(),
-      language: 'ES6'
+      language: this._currentLanguage
     });
   },
 

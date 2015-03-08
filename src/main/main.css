@@ -24,9 +24,6 @@ html, body, #tddbin, #main {
   border: 1px solid red;
 }
 
-
-
-
 .editor-and-runner {
   position: fixed;
   /* 50px - the height of the navigation bar, variables would be nice :) */
@@ -50,6 +47,6 @@ html, body, #tddbin, #main {
   background-color: #EEE;
 }
 
-  .editor-and-runner .runner iframe {
-    border: none;
-  }
+.editor-and-runner .runner iframe {
+  border: none;
+}
