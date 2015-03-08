@@ -40,9 +40,11 @@
   "dependencies": {},
   "devDependencies": {
     "browserify": "^9.0.3",
+    "coffee-script": "^1.9.1",
     "jsxcs": "^0.2.1",
+    "mocha": "^2.1.0",
+    "react": "^0.13.0-rc2",
     "reactify": "^1.0.0",
-    "watchify": "^2.3.0",
     "referee": "^1.1.1",
     "babelify": "^5.0.3",
     "react": "^0.13.0-rc2",
