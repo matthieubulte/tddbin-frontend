@@ -28,8 +28,8 @@ function onSave() {
 function refactoringRename() {
   main.turnOnRenameMode();
 }
-function getSourceCode() {
 
+function getSourceCode() {
   var sourceCode = localStorage.getItem('code');
   if(sourceCode) {
     main.setEditorContent(sourceCode);
