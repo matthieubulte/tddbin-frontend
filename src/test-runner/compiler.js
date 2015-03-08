@@ -1,4 +1,5 @@
 var babel = require('babel');
+var coffee = require('coffee-script');
 
 var compilers = {};
 
@@ -16,6 +17,16 @@ function compileEs6(sourceCode) {
 }
 compilers[ES6] = compileEs6;
 
+
+export const CoffeeScript = 'CoffeeScript';
+function compileCoffeeScript(sourceCode) {
+	// TERRIBLE HACK.
+	// pull request to fix this was sent, see https://github.com/jashkenas/coffeescript/pull/3892
+	process.stdout = {};
+
+	return coffee.compile(sourceCode, { bare: true});
+}
+compilers[CoffeeScript] = compileCoffeeScript;
 
 export function compile(sourceLanguage, sourceCode) {
   var compile = compilers[sourceLanguage];

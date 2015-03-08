@@ -1,4 +1,4 @@
-import {ES5, ES6, compile} from '../compiler.js'
+import {ES5, ES6, CoffeeScript, compile} from '../compiler.js'
 import {assert} from '../../_test-helper/assert';
 
 describe('compiler', function() {
@@ -23,6 +23,18 @@ describe('compiler', function() {
 		it('can compile ES6 code', function() {
 			assert.doesNotThrow(function() {
 				compile(ES6, '');
+			});
+		});
+	});
+
+	describe('CoffeeScript', function() {
+		it('exports the CoffeeScript constant to the user', function() {
+			assert.notEqual(CoffeeScript, undefined);
+		});
+
+		it('can compile CoffeeScript code', function() {
+			assert.doesNotThrow(function() {
+				compile(CoffeeScript, '');
 			});
 		});
 	});
