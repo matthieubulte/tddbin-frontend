@@ -2,12 +2,8 @@ import React from 'react';
 import View from './main-view';
 import TestRunner from '../test-runner/runner';
 import ShortcutProcessor from '../keyboard-shortcut/shortcut-processor';
-<<<<<<< HEAD
 import Editor from '../editor/editor';
-=======
-var compiler = require('../test-runner/compiler');
-var editor = require('ace-with-plugins');
->>>>>>> Added switching of syntax highlighting based on the current language
+import compiler from '../test-runner/compiler';
 
 export function Controller(domNode, config) {
   this._domNode = domNode;

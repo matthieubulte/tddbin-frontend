@@ -2,7 +2,7 @@ var babel = require('babel');
 var coffee = require('coffee-script');
 var tsc = require('typescript-compiler');
 
-var typescriptDefinitions = require('./typescriptDefinitions.js').typescriptDefinitions;
+import typescriptDefinitions from './typescriptDefinitions.js';
 
 var compilers = {};
 
@@ -65,3 +65,11 @@ export function compile(sourceLanguage, sourceCode) {
 
   return compile(sourceCode);
 }
+
+export default {
+	ES5: ES5,
+	ES6: ES6,
+	CoffeeScript: CoffeeScript,
+	TypeScript: TypeScript,
+	compile: compile
+};

@@ -10408,7 +10408,7 @@ declare var WScript: {
     Quit(exitCode?: number): number;
 }`;
 
-export const typescriptDefinitions = {
+export default {
 	'lib.d.ts': lib,
     'mocha.d.ts': mocha,
     'assert.d.ts': assert
