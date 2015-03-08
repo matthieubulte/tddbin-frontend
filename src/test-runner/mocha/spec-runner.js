@@ -29,7 +29,7 @@ function consumeMessage(messageData) {
   try {
     es5Code = compile(specLanguage, specSource);
   } catch(e) {
-    setErrorMessage('Syntax or transpile error\n\n' + e);
+    setErrorMessage('Compile error\n\n' + e.message);
     return;
   }
 
