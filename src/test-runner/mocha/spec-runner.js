@@ -3,7 +3,7 @@ import should from 'should';
 import assert from 'assert';
 
 import RuntimeError from '../runtime-error'
-import {compile} from '../compiler'
+import {compile} from '../../compiler/compiler'
 
 function setErrorMessage(errorMessage) {
   document.getElementById('errorOutput').innerText = errorMessage;

@@ -3,7 +3,7 @@ import View from './main-view';
 import TestRunner from '../test-runner/runner';
 import ShortcutProcessor from '../keyboard-shortcut/shortcut-processor';
 import Editor from '../editor/editor';
-import compiler from '../test-runner/compiler';
+import compiler from '../compiler/compiler';
 
 export function Controller(domNode, config) {
   this._domNode = domNode;
@@ -69,8 +69,7 @@ Controller.prototype = {
     var language = this.availableLanguages[nextLanguageIndex];
 
     this._currentLanguage = language.language;
-    // TODO: that's quite uggly, we should talk about the ace-with-plugins project
-    this._editor._editor._editor.getSession().setMode(language.aceMode);
+    this._editor.ace._editor.getSession().setMode(language.aceMode);
 
     this._render();
   },
